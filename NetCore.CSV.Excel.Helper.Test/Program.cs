@@ -31,10 +31,12 @@ namespace NetCore.CSV.Excel.Helper.Test
             string csvFileNameWithoutHeader = "ex_without_header.csv";
 
             string excelFilePath = Path.Combine(fileRootPath, excelFileName);
-            DataTable personsFromXls = CSVandExcelHelper.ReadExcelFile<Person>(excelFilePath, true, 1);
+            //DataTable personsFromXls = CSVandExcelHelper.ReadExcelFile(excelFilePath, true, 1);
+            List<Person> personsFromXls = CSVandExcelHelper.ReadExcelFile<Person>(excelFilePath, true, 1);
 
             string excelFilePathNoHeader = Path.Combine(fileRootPath, excelFileNameWitoutHeader);
-            DataTable personsFromXlsNoHeader = CSVandExcelHelper.ReadExcelFile<Person>(excelFilePathNoHeader, false, 1);
+            //DataTable personsFromXlsNoHeader = CSVandExcelHelper.ReadExcelFile(excelFilePathNoHeader, false, 1);
+            List<Person> personsFromXlsNoHeader = CSVandExcelHelper.ReadExcelFile<Person>(excelFilePathNoHeader, false, 1);
 
             string csvFilePath = Path.Combine(fileRootPath, csvFileName);
             List<Person> personsFromCsvWithHeader = CSVandExcelHelper.ReadCSVFile<Person>(csvFilePath, true);
@@ -47,6 +49,9 @@ namespace NetCore.CSV.Excel.Helper.Test
 
             string outputCsvPathWithoutHeader = Path.Combine(fileRootPath, "output_without_header.csv");
             CSVandExcelHelper.WriteCSVFile<Person>(outputCsvPathWithoutHeader, personsFromCsvWithHeader, false);
+
+            string outputXlsPath = Path.Combine(fileRootPath, "output_with_header.xlsx");
+            CSVandExcelHelper.WriteExcelFile(outputXlsPath, personsFromXlsNoHeader);
         }
     }
 }
