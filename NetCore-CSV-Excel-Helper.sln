@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.810.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore-CSV-Excel-Helper", "NetCore-CSV-Excel-Helper\NetCore-CSV-Excel-Helper.csproj", "{5BD89BBC-76FF-41E1-A5FD-5308E1A3CDFF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{53BCF6AA-4183-4D40-8235-3BA94185240C}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
