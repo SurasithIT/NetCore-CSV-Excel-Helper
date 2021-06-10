@@ -32,26 +32,26 @@ namespace NetCore.CSV.Excel.Helper.Test
 
             string excelFilePath = Path.Combine(fileRootPath, excelFileName);
             //DataTable personsFromXls = CSVandExcelHelper.ReadExcelFile(excelFilePath, true, 1);
-            List<Person> personsFromXls = CSVandExcelHelper.ReadExcelFile<Person>(excelFilePath, true, 1);
+            List<Person> personsFromXls = CSVandExcelHelper.ImportFromExcel<Person>(excelFilePath, true, 1);
 
             string excelFilePathNoHeader = Path.Combine(fileRootPath, excelFileNameWitoutHeader);
             //DataTable personsFromXlsNoHeader = CSVandExcelHelper.ReadExcelFile(excelFilePathNoHeader, false, 1);
-            List<Person> personsFromXlsNoHeader = CSVandExcelHelper.ReadExcelFile<Person>(excelFilePathNoHeader, false, 1);
+            List<Person> personsFromXlsNoHeader = CSVandExcelHelper.ImportFromExcel<Person>(excelFilePathNoHeader, false, 1);
 
             string csvFilePath = Path.Combine(fileRootPath, csvFileName);
-            List<Person> personsFromCsvWithHeader = CSVandExcelHelper.ReadCSVFile<Person>(csvFilePath, true);
+            List<Person> personsFromCsvWithHeader = CSVandExcelHelper.ImportFromExcel<Person>(csvFilePath, true);
 
             string csvFilePathNoHeader = Path.Combine(fileRootPath, csvFileNameWithoutHeader);
-            List<Person> personsFromCsvNoHeader = CSVandExcelHelper.ReadCSVFile<Person>(csvFilePathNoHeader, false);
+            List<Person> personsFromCsvNoHeader = CSVandExcelHelper.ImportFromCSV<Person>(csvFilePathNoHeader, false);
 
             string outputCsvPath = Path.Combine(fileRootPath, "output_with_header.csv");
-            CSVandExcelHelper.WriteCSVFile<Person>(outputCsvPath, personsFromCsvWithHeader, true);
+            CSVandExcelHelper.ExportToCSV<Person>(outputCsvPath, personsFromCsvWithHeader, true);
 
             string outputCsvPathWithoutHeader = Path.Combine(fileRootPath, "output_without_header.csv");
-            CSVandExcelHelper.WriteCSVFile<Person>(outputCsvPathWithoutHeader, personsFromCsvWithHeader, false);
+            CSVandExcelHelper.ExportToCSV<Person>(outputCsvPathWithoutHeader, personsFromCsvWithHeader, false);
 
             string outputXlsPath = Path.Combine(fileRootPath, "output_with_header.xlsx");
-            CSVandExcelHelper.WriteExcelFile(outputXlsPath, personsFromXlsNoHeader);
+            CSVandExcelHelper.ExportToExcel<Person>(outputXlsPath, personsFromXlsNoHeader);
         }
     }
 }

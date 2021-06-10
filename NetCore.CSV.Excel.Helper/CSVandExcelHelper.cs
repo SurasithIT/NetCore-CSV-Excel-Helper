@@ -14,7 +14,7 @@ namespace NetCore.CSV.Excel.Helper
 {
     public class CSVandExcelHelper
     {
-        public static DataTable ReadExcelFile(string filePath, bool hasHeader, int sheetNumber)
+        public static DataTable ImportFromExcel(string filePath, bool hasHeader, int sheetNumber = 1)
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             DataTable dataTable = new DataTable();
@@ -35,7 +35,7 @@ namespace NetCore.CSV.Excel.Helper
             return dataTable;
         }
 
-        public static List<T> ReadExcelFile<T>(string filePath, bool hasHeader, int sheetNumber)
+        public static List<T> ImportFromExcel<T>(string filePath, bool hasHeader, int sheetNumber = 1)
         {
             List<T> rows = new List<T>();
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
@@ -58,7 +58,7 @@ namespace NetCore.CSV.Excel.Helper
             return rows;
         }
 
-        public static List<T> ReadCSVFile<T>(string filePath, bool hasHeader)
+        public static List<T> ImportFromCSV<T>(string filePath, bool hasHeader = true)
         {
             List<T> rows = new List<T>();
             var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -73,7 +73,7 @@ namespace NetCore.CSV.Excel.Helper
             return rows;
         }
 
-        public static void WriteCSVFile<T>(string outputFilePath, List<T> records, bool writeHeader)
+        public static void ExportToCSV<T>(string outputFilePath, List<T> records, bool writeHeader = true)
         {
             var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -86,7 +86,7 @@ namespace NetCore.CSV.Excel.Helper
             }
         }
 
-        public static void WriteExcelFile(string outputFilePath, DataTable dataTable, string sheetName = "Sheet1")
+        public static void ExportToExcel(string outputFilePath, DataTable dataTable, string sheetName = "Sheet1")
         {
             XLWorkbook workbook = new XLWorkbook();
             workbook.AddWorksheet(sheetName);
@@ -95,7 +95,7 @@ namespace NetCore.CSV.Excel.Helper
             workbook.SaveAs(outputFilePath);
         }
 
-        public static void WriteExcelFile<T>(string outputFilePath, List<T> records, string sheetName = "Sheet1")
+        public static void ExportToExcel<T>(string outputFilePath, List<T> records, string sheetName = "Sheet1")
         {
             XLWorkbook workbook = new XLWorkbook();
             workbook.AddWorksheet(sheetName);
@@ -104,23 +104,43 @@ namespace NetCore.CSV.Excel.Helper
             workbook.SaveAs(outputFilePath);
         }
 
-        private static List<T> ConvertDataTable<T>(DataTable dataTable, bool hasHeaderRow)
+        private static List<T> ConvertDataTable<T>(DataTable dataTable, bool hasHeaderRow = true)
         {
             List<T> data = new List<T>();
             foreach (DataRow row in dataTable.Rows)
             {
-                T item = GetItem<T>(row, !hasHeaderRow);
+                T item = GetItem<T>(row, hasHeaderRow);
                 data.Add(item);
             }
             return data;
         }
 
-        private static T GetItem<T>(DataRow dataRow, bool mapByIndex)
+        private static T GetItem<T>(DataRow dataRow, bool hasHeaderRow = true)
         {
             Type temp = typeof(T);
             T obj = Activator.CreateInstance<T>();
 
-            if (mapByIndex == true)
+            if (hasHeaderRow == true)
+            {
+                //Map by property and column name
+                foreach (DataColumn column in dataRow.Table.Columns)
+                {
+                    foreach (PropertyInfo pro in temp.GetProperties())
+                    {
+                        if (pro.Name == column.ColumnName)
+                        {
+                            var data = dataRow[column.ColumnName];
+                            var _data = Convert.ChangeType(data, pro.PropertyType);
+                            pro.SetValue(obj, _data, null);
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                }
+            }
+            else
             {
                 //Map by property and column index
                 for (int i = 0; i < dataRow.Table.Columns.Count; i++)
@@ -134,26 +154,6 @@ namespace NetCore.CSV.Excel.Helper
                             var property = properties[j];
                             var _data = Convert.ChangeType(data, property.PropertyType);
                             property.SetValue(obj, _data, null);
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                //Map by property and column name
-                foreach (DataColumn column in dataRow.Table.Columns)
-                {
-                    foreach (PropertyInfo pro in temp.GetProperties())
-                    {
-                        if (pro.Name == column.ColumnName)
-                        {
-                            var data = dataRow[column.ColumnName];
-                            var _data = Convert.ChangeType(data, pro.PropertyType);
-                            pro.SetValue(obj, _data, null);
                         }
                         else
                         {
