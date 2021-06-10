@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.810.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore-CSV-Excel-Helper", "NetCore-CSV-Excel-Helper\NetCore-CSV-Excel-Helper.csproj", "{5BD89BBC-76FF-41E1-A5FD-5308E1A3CDFF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5BD89BBC-76FF-41E1-A5FD-5308E1A3CDFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BD89BBC-76FF-41E1-A5FD-5308E1A3CDFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BD89BBC-76FF-41E1-A5FD-5308E1A3CDFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BD89BBC-76FF-41E1-A5FD-5308E1A3CDFF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7235660-022A-4FB9-97EB-D6B5C7E535BA}
+	EndGlobalSection
+EndGlobal
