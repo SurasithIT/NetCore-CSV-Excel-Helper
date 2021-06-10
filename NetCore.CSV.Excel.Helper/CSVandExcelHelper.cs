@@ -29,7 +29,6 @@ namespace NetCore.CSV.Excel.Helper
                             UseHeaderRow = hasHeader
                         }
                     });
-
                     dataTable = dataset.Tables[sheetNumber - 1];
                 }
             }
@@ -49,6 +48,19 @@ namespace NetCore.CSV.Excel.Helper
                 rows = csv.GetRecords<T>().ToList();
             }
             return rows;
+        }
+
+        public static void WriteCSVFile<T>(string filePath, List<T> records, bool writeHeader)
+        {
+            var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = writeHeader
+            };
+            using (var writer = new StreamWriter(filePath))
+            using (var csv = new CsvWriter(writer, csvConfig))
+            {
+                csv.WriteRecords(records);
+            }
         }
     }
 }
