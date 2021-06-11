@@ -61,7 +61,9 @@ namespace NetCore.CSV.Excel.Helper.Test
             };
 
             string outputXlsPath = Path.Combine(fileRootPath, "output_with_header.xlsx");
-             CSVandExcelHelper.ExportToExcel<Person>(outputXlsPath, personsFromXls, columnMappers);
+             CSVandExcelHelper.ExportToExcel<Person>(outputXlsPath, personsFromXls);
+            string outputXlsCustomHeaderPath = Path.Combine(fileRootPath, "output_with_custom_header.xlsx");
+            CSVandExcelHelper.ExportToExcel<Person>(outputXlsCustomHeaderPath, personsFromXls, columnMappers);
 
             string csvCustomHeaderFilePath = Path.Combine(fileRootPath, csvFileNameCustomHeader);
             // List<Person> personsFromCsvWithHeader = CSVandExcelHelper.ImportFromCSV<Person>(csvCustomHeaderFilePath, true);
