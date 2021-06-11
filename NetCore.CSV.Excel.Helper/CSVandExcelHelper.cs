@@ -9,6 +9,7 @@ using ClosedXML.Excel;
 using CsvHelper;
 using CsvHelper.Configuration;
 using ExcelDataReader;
+using NetCore.CSV.Excel.Helper.Models;
 
 namespace NetCore.CSV.Excel.Helper
 {
@@ -95,12 +96,19 @@ namespace NetCore.CSV.Excel.Helper
             workbook.SaveAs(outputFilePath);
         }
 
-        public static void ExportToExcel<T>(string outputFilePath, List<T> records, string sheetName = "Sheet1")
+        public static void ExportToExcel<T>(string outputFilePath, List<T> records, List<ColumnMapperModel> columnMappers = null, string sheetName = "Sheet1")
         {
             XLWorkbook workbook = new XLWorkbook();
             workbook.AddWorksheet(sheetName);
             var worksheet = workbook.Worksheet(sheetName);
-            worksheet.FirstRow().FirstCell().InsertTable<T>(records);
+            var table = worksheet.FirstRow().FirstCell().InsertTable<T>(records);
+            if(columnMappers != null)
+            {
+                foreach(ColumnMapperModel mapper in columnMappers)
+                {
+                    table.Field(mapper.PropertyName).Name = mapper.ColumnName;
+                }
+            }
             workbook.SaveAs(outputFilePath);
         }
 
