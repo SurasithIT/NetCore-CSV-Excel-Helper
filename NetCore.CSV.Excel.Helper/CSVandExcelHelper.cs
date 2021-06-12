@@ -36,7 +36,7 @@ namespace NetCore.CSV.Excel.Helper
             return dataTable;
         }
 
-        public static List<T> ImportFromExcel<T>(string filePath, bool hasHeader, int sheetNumber = 1)
+        public static List<T> ImportFromExcel<T>(string filePath, bool hasHeader, int sheetNumber = 1, List<ColumnMapperModel> columnMappers = null)
         {
             List<T> rows = new List<T>();
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
@@ -55,7 +55,7 @@ namespace NetCore.CSV.Excel.Helper
                     dataTable = dataset.Tables[sheetNumber - 1];
                 }
             }
-            rows = ConvertDataTable<T>(dataTable, hasHeader);
+            rows = ConvertDataTable<T>(dataTable, hasHeader, columnMappers);
             return rows;
         }
 
@@ -102,9 +102,9 @@ namespace NetCore.CSV.Excel.Helper
             workbook.AddWorksheet(sheetName);
             var worksheet = workbook.Worksheet(sheetName);
             var table = worksheet.FirstRow().FirstCell().InsertTable<T>(records);
-            if(columnMappers != null)
+            if (columnMappers != null)
             {
-                foreach(ColumnMapperModel mapper in columnMappers)
+                foreach (ColumnMapperModel mapper in columnMappers)
                 {
                     table.Field(mapper.PropertyName).Name = mapper.ColumnName;
                 }
@@ -112,9 +112,18 @@ namespace NetCore.CSV.Excel.Helper
             workbook.SaveAs(outputFilePath);
         }
 
-        private static List<T> ConvertDataTable<T>(DataTable dataTable, bool hasHeaderRow = true)
+        private static List<T> ConvertDataTable<T>(DataTable dataTable, bool hasHeaderRow = true, List<ColumnMapperModel> columnMappers = null)
         {
             List<T> data = new List<T>();
+            if (columnMappers != null)
+            {
+                foreach (ColumnMapperModel mapper in columnMappers)
+                {
+                    dataTable.Columns[mapper.ColumnName].ColumnName = mapper.PropertyName;
+                }
+                dataTable.AcceptChanges();
+            }
+
             foreach (DataRow row in dataTable.Rows)
             {
                 T item = GetItem<T>(row, hasHeaderRow);

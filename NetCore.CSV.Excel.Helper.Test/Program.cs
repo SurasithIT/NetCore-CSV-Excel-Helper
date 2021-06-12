@@ -34,11 +34,11 @@ namespace NetCore.CSV.Excel.Helper.Test
 
             string excelFilePath = Path.Combine(fileRootPath, excelFileName);
             //DataTable personsFromXls = CSVandExcelHelper.ReadExcelFile(excelFilePath, true, 1);
-             List<Person> personsFromXls = CSVandExcelHelper.ImportFromExcel<Person>(excelFilePath, true, 1);
+            List<Person> personsFromXls = CSVandExcelHelper.ImportFromExcel<Person>(excelFilePath, true, 1);
 
             string excelFilePathNoHeader = Path.Combine(fileRootPath, excelFileNameWitoutHeader);
             //DataTable personsFromXlsNoHeader = CSVandExcelHelper.ReadExcelFile(excelFilePathNoHeader, false, 1);
-             //List<Person> personsFromXlsNoHeader = CSVandExcelHelper.ImportFromExcel<Person>(excelFilePathNoHeader, false, 1);
+            //List<Person> personsFromXlsNoHeader = CSVandExcelHelper.ImportFromExcel<Person>(excelFilePathNoHeader, false, 1);
 
             string csvFilePath = Path.Combine(fileRootPath, csvFileName);
             //List<Person> personsFromCsvWithHeader = CSVandExcelHelper.ImportFromCSV<Person>(csvFilePath, true);
@@ -47,7 +47,7 @@ namespace NetCore.CSV.Excel.Helper.Test
             // List<Person> personsFromCsvNoHeader = CSVandExcelHelper.ImportFromCSV<Person>(csvFilePathNoHeader, false);
 
             string outputCsvPath = Path.Combine(fileRootPath, "output_with_header.csv");
-            // CSVandExcelHelper.ExportToCSV<Person>(outputCsvPath, personsFromCsvWithHeader, true);
+            //CSVandExcelHelper.ExportToCSV<Person>(outputCsvPath, personsFromCsvWithHeader, true);
 
             string outputCsvPathWithoutHeader = Path.Combine(fileRootPath, "output_without_header.csv");
             // CSVandExcelHelper.ExportToCSV<Person>(outputCsvPathWithoutHeader, personsFromCsvWithHeader, false);
@@ -55,22 +55,29 @@ namespace NetCore.CSV.Excel.Helper.Test
 
             List<ColumnMapperModel> columnMappers = new List<ColumnMapperModel>()
             {
-                new ColumnMapperModel(){PropertyName = "Id", ColumnName = "#"},
+                new ColumnMapperModel(){PropertyName = "Id", ColumnName = "ลำดับ"},
                 new ColumnMapperModel(){PropertyName = "Name", ColumnName = "ชื่อ"},
                 new ColumnMapperModel(){PropertyName = "Age", ColumnName = "อายุ"}
             };
 
-            string outputXlsPath = Path.Combine(fileRootPath, "output_with_header.xlsx");
-             CSVandExcelHelper.ExportToExcel<Person>(outputXlsPath, personsFromXls);
-            string outputXlsCustomHeaderPath = Path.Combine(fileRootPath, "output_with_custom_header.xlsx");
-            CSVandExcelHelper.ExportToExcel<Person>(outputXlsCustomHeaderPath, personsFromXls, columnMappers);
+            //string outputXlsPath = Path.Combine(fileRootPath, "output_with_header.xlsx");
+            //CSVandExcelHelper.ExportToExcel<Person>(outputXlsPath, personsFromXls);
+            //string outputXlsCustomHeaderPath = Path.Combine(fileRootPath, "output_with_custom_header.xlsx");
+            //CSVandExcelHelper.ExportToExcel<Person>(outputXlsCustomHeaderPath, personsFromXls, columnMappers);
 
             string csvCustomHeaderFilePath = Path.Combine(fileRootPath, csvFileNameCustomHeader);
-            // List<Person> personsFromCsvWithHeader = CSVandExcelHelper.ImportFromCSV<Person>(csvCustomHeaderFilePath, true);
+            //List<Person> personsFromCsvWithCustomHeader = CSVandExcelHelper.ImportFromCSV<Person>(csvCustomHeaderFilePath, true);
 
-            //string excelCustomHeaderFilePath = Path.Combine(fileRootPath, excelFileNameCustomHeader);
-            //DataTable personsFromXls1 = CSVandExcelHelper.ImportFromExcel(excelCustomHeaderFilePath, true, 1);
-            //List<Person> personsFromXls2 = CSVandExcelHelper.ImportFromExcel<Person>(excelCustomHeaderFilePath, true, 1);
+            string outputCsvCustomHeaderPath = Path.Combine(fileRootPath, "output_with_custom_header.csv");
+            //CSVandExcelHelper.ExportToCSV<Person>(outputCsvCustomHeaderPath, personsFromCsvWithCustomHeader, true);
+
+            string excelCustomHeaderFilePath = Path.Combine(fileRootPath, excelFileNameCustomHeader);
+            DataTable personsFromXls1 = CSVandExcelHelper.ImportFromExcel(excelCustomHeaderFilePath, true, 1);
+            //personsFromXls1.Columns["ลำดับ"].ColumnName = "Id";
+            //personsFromXls1.Columns["ชื่อ"].ColumnName = "Name";
+            //personsFromXls1.Columns["อายุ"].ColumnName = "Age";
+            //personsFromXls1.AcceptChanges();
+            List<Person> personsFromXls2 = CSVandExcelHelper.ImportFromExcel<Person>(excelCustomHeaderFilePath, true, 1, columnMappers);
         }
     }
 }
