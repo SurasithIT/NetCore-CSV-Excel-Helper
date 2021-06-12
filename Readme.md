@@ -22,6 +22,7 @@
 - [c# - Exporting the values in List to excel - Stack Overflow](https://stackoverflow.com/questions/2206279/exporting-the-values-in-list-to-excel)
 - [ClosedXML](https://github.com/closedxml/closedxml)
 - [ExcelDataReader C# (CSharp) Code Examples - HotExamples](https://csharp.hotexamples.com/examples/-/ExcelDataReader/-/php-exceldatareader-class-examples.html)
+- [c# - How to change the DataTable Column Name? - Stack Overflow](https://stackoverflow.com/questions/6407239/how-to-change-the-datatable-column-name)
 
 ## Backlog Task
 
