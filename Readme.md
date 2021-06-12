@@ -26,4 +26,8 @@
 ## Backlog Task
 
 - [ ] Import : Map object by readable specific column name
+  - [x] Excel
+  - [ ] CSV
 - [ ] Export : write specific column name as readable
+  - [x] Excel
+  - [ ] CSV
