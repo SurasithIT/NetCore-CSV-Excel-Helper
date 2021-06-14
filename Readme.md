@@ -23,12 +23,13 @@
 - [ClosedXML](https://github.com/closedxml/closedxml)
 - [ExcelDataReader C# (CSharp) Code Examples - HotExamples](https://csharp.hotexamples.com/examples/-/ExcelDataReader/-/php-exceldatareader-class-examples.html)
 - [c# - How to change the DataTable Column Name? - Stack Overflow](https://stackoverflow.com/questions/6407239/how-to-change-the-datatable-column-name)
+- [Attributes | CsvHelper (joshclose.github.io)](https://joshclose.github.io/CsvHelper/examples/configuration/attributes/)
 
 ## Backlog Task
 
-- [ ] Import : Map object by readable specific column name
+- [x] Import : with Map object by readable specific column name
   - [x] Excel
-  - [ ] CSV
-- [ ] Export : write specific column name as readable
+  - [x] CSV (using attribute)
+- [x] Export : with write specific column name as readable
   - [x] Excel
-  - [ ] CSV
+  - [x] CSV (using attribute)

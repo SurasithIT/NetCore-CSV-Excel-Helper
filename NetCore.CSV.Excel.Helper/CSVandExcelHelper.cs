@@ -87,16 +87,22 @@ namespace NetCore.CSV.Excel.Helper
             }
         }
 
-        public static void ExportToExcel(string outputFilePath, DataTable dataTable, string sheetName = "Sheet1")
+        public static void ExportToExcel(string outputFilePath, DataTable dataTable, bool writeHeader = true, string sheetName = "Sheet1")
         {
             XLWorkbook workbook = new XLWorkbook();
             workbook.AddWorksheet(sheetName);
             var worksheet = workbook.Worksheet(sheetName);
-            worksheet.FirstRow().FirstCell().InsertTable(dataTable);
+            var table = worksheet.FirstRow().FirstCell().InsertTable(dataTable);
+            if (writeHeader != true)
+            {
+                table.ShowHeaderRow = false;
+                worksheet.FirstRow().Delete();
+            }
+
             workbook.SaveAs(outputFilePath);
         }
 
-        public static void ExportToExcel<T>(string outputFilePath, List<T> records, List<ColumnMapperModel> columnMappers = null, string sheetName = "Sheet1")
+        public static void ExportToExcel<T>(string outputFilePath, List<T> records, bool writeHeader = true, List<ColumnMapperModel> columnMappers = null,string sheetName = "Sheet1")
         {
             XLWorkbook workbook = new XLWorkbook();
             workbook.AddWorksheet(sheetName);
@@ -108,6 +114,11 @@ namespace NetCore.CSV.Excel.Helper
                 {
                     table.Field(mapper.PropertyName).Name = mapper.ColumnName;
                 }
+            }
+            if (writeHeader != true)
+            {
+                table.ShowHeaderRow = false;
+                worksheet.FirstRow().Delete();
             }
             workbook.SaveAs(outputFilePath);
         }
