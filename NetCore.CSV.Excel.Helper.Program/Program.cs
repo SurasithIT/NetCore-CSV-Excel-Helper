@@ -10,7 +10,7 @@ using ExcelDataReader;
 using Microsoft.Extensions.Configuration;
 using NetCore.CSV.Excel.Helper.Models;
 
-namespace NetCore.CSV.Excel.Helper.Test
+namespace NetCore.CSV.Excel.Helper.Program
 {
     class Program
     {
